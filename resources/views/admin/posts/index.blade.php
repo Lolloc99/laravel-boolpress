@@ -11,7 +11,7 @@
                     {{-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
-                        <a href="" class="btn btn-primary">Leggi post</a>
+                        <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-primary">Leggi post</a>
                     </div>
                 </div>
             </div>
