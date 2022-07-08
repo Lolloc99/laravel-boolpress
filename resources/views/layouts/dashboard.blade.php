@@ -63,6 +63,12 @@
                                 Nuovo post
                             </a>
                         </li> 
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('admin.categories.index') }}">
+                                <i class="fa-solid fa-tags"></i>
+                                Lista categorie
+                            </a>
+                        </li> 
                     </ul>
 
                 </div>

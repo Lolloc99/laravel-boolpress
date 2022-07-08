@@ -113,7 +113,7 @@ class PostController extends Controller
     }
 
     private function generatePostSlugFromTitle($title) {
-        // generaimo slug base
+        // generiamo slug base
         // finchè slug esiste nel db
         // aggiungiamo numero progressivo, 
         // se non esiste, salvo slug nel model

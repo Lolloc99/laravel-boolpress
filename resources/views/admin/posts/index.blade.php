@@ -11,12 +11,14 @@
                     {{-- <img class="card-img-top" src="..." alt="Card image cap"> --}}
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
-                        <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-primary">Leggi post</a>
-                        <form action="{{ route('admin.posts.destroy', ['post' => $post->id]) }}" method="POST" class="mt-2">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Elimina</button>
-                        </form>
+                        <div class="d-flex">
+                            <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-primary">Leggi post</a>
+                            <form action="{{ route('admin.posts.destroy', ['post' => $post->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Elimina</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
