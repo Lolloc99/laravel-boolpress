@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(9);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -121,6 +121,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+        $post ->tags()->sync([]);
         $post->delete();
         return redirect()->route('admin.posts.store');
     }

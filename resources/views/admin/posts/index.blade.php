@@ -18,4 +18,5 @@
             {{-- /Single post --}}
         @endforeach
     </div>
+    {{ $posts->links() }}
 @endsection
