@@ -5,21 +5,7 @@
     <div class="row row-cols-3">
       <!-- Single post -->
       <div v-for="post in posts" :key="post.id" class="col">
-        <div class="card mb-3">
-          <!-- <img class="card-img-top" src="..." alt="Card image cap" /> -->
-          <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">
-              {{ troncateText(post.content, 50) }}
-            </p>
-          </div>
-          <!-- <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-          <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div> -->
-        </div>
+        <PostCard :post="post" />
       </div>
     </div>
      <nav aria-label="...">
@@ -50,8 +36,13 @@
 </template>
 
 <script>
+import PostCard from "../components/PostCard.vue";
 export default {
     name: "Posts",
+    components: {
+      PostCard,
+    },
+
     data() {
         return {
             posts: [],
@@ -66,25 +57,18 @@ export default {
     },
 
     methods: {
-        getPosts(pageNumber) {
-            axios.get("/api/posts", {
-              params: {
-                page: pageNumber,
-              }
-            }).then((resp) => {
-                this.posts = resp.data.results.data;
-                this.currentPage = resp.data.results.current_page;
-                this.lastPage = resp.data.results.last_page;
-                this.totalPosts = resp.data.results.total;
-            })
-        },
-        troncateText(text, maxCharNumber) {
-            // se il testo supera MaxCharNumber allora taglia il testo e aggiunge "..."
-            if (text.length > maxCharNumber) {
-                return text.substr(0, maxCharNumber) + '...';
-            }
-            return text;
-        }
+      getPosts(pageNumber) {
+        axios.get("/api/posts", {
+          params: {
+            page: pageNumber,
+          }
+        }).then((resp) => {
+          this.posts = resp.data.results.data;
+          this.currentPage = resp.data.results.current_page;
+          this.lastPage = resp.data.results.last_page;
+          this.totalPosts = resp.data.results.total;
+        })
+      },
     }
 }
 </script>
