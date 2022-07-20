@@ -2,6 +2,9 @@
 
 @section('content')
     <h1> {{ $post->title }} </h1>
+    @if ($post->cover)
+        <img src="{{ asset('storage/' . $post->cover) }}" alt=""> 
+    @endif
     <p>Slug: {{ $post->slug }}</p>
     <p>Categoria: {{ $category ? $category->name : 'Nessuna categoria' }}</p>
     <p><strong>Tags: </strong>

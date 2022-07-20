@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -45,6 +46,12 @@ class PostController extends Controller
         $request->validate($this->getValidationRules());
 
         $data = $request->all();
+
+        if (isset($data['image'])) {
+            $image_path = Storage::put('post_covers', $data['image']);
+            $data['cover'] = $image_path;
+        }
+
         $post = new Post();
         $post->fill($data);
         $post->slug = $this->generatePostSlugFromTitle($post->title);
@@ -99,6 +106,20 @@ class PostController extends Controller
         $data = $request->all();
 
         $post = Post::findOrFail($id);
+
+        // Se presente un immagine và prima rimossa la precedente e poi và salvata la nuova, per poi salvare nel db
+        // Controllo se presente ↓
+        if (isset($data['image'])) {
+            // Cancello l'attuale immagine se presente ↓
+            if ($post->cover) {
+                Storage::delete($post->cover);
+            }
+            // Salvo la nuova ↓
+            $image_path = Storage::put('post_covers', $data['image']);
+            // Salvo il path della nuova ↓
+            $data['cover'] = $image_path;
+        }
+
         $post->fill($data);
         $post->slug = $this->generatePostSlugFromTitle($post->title);
         $post->save();
@@ -122,6 +143,10 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post ->tags()->sync([]);
+        // Se presente un'immagine cover, deve essere cancellata
+        if ($post->cover) {
+            Storage::delete($post->cover);
+        }
         $post->delete();
         return redirect()->route('admin.posts.store');
     }
@@ -148,8 +173,9 @@ class PostController extends Controller
         return [
             'title' => 'required|max:255',
             'content' => 'required|max:30000',
-            'category_id'=> 'nullable|exists:categories,id',
-            'tags'=> 'exists:tags,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'exists:tags,id',
+            'image' => 'image|max:512'
         ];
     }
 }

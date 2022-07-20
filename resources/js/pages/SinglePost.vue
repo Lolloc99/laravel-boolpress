@@ -2,6 +2,9 @@
   <div class="container">
     <section v-if="post">
         <h1>{{ post.title }}</h1>
+        <div v-if="post.cover">
+            <img :src="post.cover" :alt="post.title">
+        </div>
         <p>Category: {{ categoryName }}</p>
         <div class="mb-4">
             <router-link

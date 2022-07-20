@@ -12,7 +12,8 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('admin.posts.store') }}" method="POST">
+
+    <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
         @method('POST')
         @csrf
 
@@ -20,6 +21,7 @@
             <label for="title">Title</label>
             <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
         </div>
+
         <div class="form-group">
             <label for="category_id">Category</label>
             <select class="form-control" name="category_id" id="category_id">
@@ -29,6 +31,7 @@
                 @endforeach
             </select>
         </div>
+
         <div class="my-3">
 
             <h4>Tags</h4>
@@ -43,10 +46,17 @@
                 </div>
             @endforeach
         </div>
+
         <div class="form-group">
             <label for="content">Content</label>
             <textarea type="text" class="form-control" name="content" id="content"> {{ old('content') }} </textarea>
         </div>
+
+        <div>
+            <label for="image">Immagine di copertina</label>
+            <input type="file" id="image" name="image">
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 @endsection
